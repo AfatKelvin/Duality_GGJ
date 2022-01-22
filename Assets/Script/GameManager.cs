@@ -8,13 +8,16 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     public GameObject monsterWhite1,monsterBlack1, monsterWhite2, monsterBlack2;
     public GameObject monsterCollect1, monsterCollect2;
-    public GameObject mainMenu,resiltMenu;
+    public GameObject mainMenu,resultMenu, result2PMenu;
     public GameObject onePSet, twoPSet;
     public bool p1only = true;
     public int killMonster1P, killMonster2P;
-
+    //game 秈︽だ计
     public GameObject score1, score2;
     public Text score1TextOneP, score2TextOneP, score2TextTwoP;
+    //挡衡だ计
+    public Text score1TextOnePEnd, score2TextOnePEnd, score2TextTwoPEnd, winLosJudgeText1P,winLosJudgeText2P;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -239,11 +242,11 @@ public class GameManager : MonoBehaviour
     }
     public void CloseResult()
     {
-        resiltMenu.SetActive(false);
+        resultMenu.SetActive(false);
     }
     public void ShowResult()
     {
-        resiltMenu.SetActive(true);
+        resultMenu.SetActive(true);
     }
 
     public void ScoreRenew() 
@@ -286,5 +289,19 @@ public class GameManager : MonoBehaviour
             }
             
         }
+    }
+
+    public void OnePlayerResultPanel()
+    {
+        resultMenu.SetActive(true);
+        score1TextOnePEnd.text = "だ计 : " + (killMonster1P * 100).ToString();
+    }
+
+
+    public void PKResultPanel() 
+    {
+        result2PMenu.SetActive(true);
+        score2TextOnePEnd.text = "1P だ计 : " + (killMonster1P * 100).ToString();
+        score2TextTwoPEnd.text = "2P だ计 : " + (killMonster2P * 100).ToString();
     }
 }
