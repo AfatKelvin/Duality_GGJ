@@ -271,12 +271,15 @@ public class GameManager : MonoBehaviour
     {
         if (p1only)
         {
-            score1TextOneP.text = " 擊殺數 : " + (killMonster1P * 100).ToString();
+            score1TextOneP.text = " 藍騎士擊殺了" + (killMonster1P).ToString() + " 隻";
         }
         else if (!p1only)
         {
-            score2TextOneP.text = " 1P 擊殺數 : " + (killMonster1P * 100).ToString();
-            score2TextTwoP.text = " 2P 擊殺數 : " + (killMonster2P * 100).ToString();
+            score2TextOneP.text = " 藍騎士擊殺了" + (killMonster1P).ToString() + " 隻";
+            score2TextTwoP.text = " 紅騎士擊殺了" + (killMonster2P).ToString() + " 隻";
+
+            
+
             combo1PText.text = "Combo : " + combo1P;
             combo2PText.text = "Combo : " + combo2P;
 
@@ -319,8 +322,22 @@ public class GameManager : MonoBehaviour
 
     public void PKResultPanel() 
     {
+        Debug.Log("2pEnd");
         result2PMenu.SetActive(true);
-        score2TextOnePEnd.text = "1P 分數 : " + (killMonster1P * 100).ToString();
-        score2TextTwoPEnd.text = "2P 分數 : " + (killMonster2P * 100).ToString();
+        score2TextOnePEnd.text = "" + (killMonster1P).ToString();
+        score2TextTwoPEnd.text = "" + (killMonster2P).ToString();
+
+        if (killMonster1P > killMonster2P)
+        {
+            winLosJudgeText2P.text = "紅 比 藍 多擊殺了 " + (killMonster1P > killMonster2P).ToString() + " 隻 ";
+        }
+        else if (killMonster1P < killMonster2P)
+        {
+            winLosJudgeText2P.text = "藍 比 紅 多擊殺了 " + (killMonster2P > killMonster1P).ToString() + " 隻 ";
+        }
+        else
+        {
+            winLosJudgeText2P.text = "紅 和 藍 平手";
+        }
     }
 }

@@ -27,13 +27,21 @@ public class TimeCounter : MonoBehaviour
         {
             timeLeft -= Time.deltaTime;
             timeLeftText.GetComponent<Text>().text = "" + Mathf.Round(timeLeft).ToString();
-            if (timeLeft <= 10)
+
+            if (timeLeft <= 0)
+            {
+                timeCountDown = false;
+                textScale = 1f;
+                timeLeftText.transform.localScale = new Vector2(textScale, textScale);
+                GameManager.instance.PKResultPanel();
+            }
+            else if (timeLeft <= 10)
             {
                 if (growUp)
                 {
                     textScale += 0.1f;
                     timeLeftText.transform.localScale = new Vector2(textScale, textScale);
-                    if (textScale>=1.2f)
+                    if (textScale >= 1.2f)
                     {
                         growUp = false;
                     }
@@ -47,14 +55,6 @@ public class TimeCounter : MonoBehaviour
                         growUp = true;
                     }
                 }
-            }
-            else if (timeLeft<=0)
-            {
-                timeCountDown = false;
-                textScale = 1f;
-                timeLeftText.transform.localScale = new Vector2(textScale, textScale);
-                if (textScale >= 1.1f)
-                    GameManager.instance.PKResultPanel();
             }
         }
     }
