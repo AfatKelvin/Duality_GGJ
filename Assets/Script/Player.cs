@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public static Player instance;
+    
     public GameObject attackLeft, attackRight;
+    public int heroTeam;
     bool atttack;
     // Start is called before the first frame update
     void Start()
     {
-        instance = this;
     }
 
     // Update is called once per frame
@@ -18,14 +18,33 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.A))
         {
-            Debug.Log("A");
-            Attack(0);
-            Debug.Log("A1");
+            if (heroTeam == 1)
+            {
+                Attack(0);
+            }
         }
         if (Input.GetKeyDown(KeyCode.S))
         {
-            Debug.Log("S");
-            Attack(1);
+            if (heroTeam == 1)
+            {
+                Attack(1);
+            }
+        }
+
+
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            if (heroTeam == 2)
+            {
+                Attack(0);
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            if (heroTeam == 2)
+            {
+                Attack(1);
+            }
         }
     }
 
@@ -53,9 +72,20 @@ public class Player : MonoBehaviour
             attackRight.SetActive(true);
         }
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.1f);
 
         attackLeft.SetActive(false);
         attackRight.SetActive(false);
+
+        // monster move
+        for (int i = 0; i < GameManager.instance.monsterCollect1.transform.childCount; i++)
+        {
+            GameManager.instance.monsterCollect1.transform.GetChild(i).gameObject.GetComponent<MonsterMove>().MoveToGoal();
+        }
+
     }
+
+
+
+
 }
