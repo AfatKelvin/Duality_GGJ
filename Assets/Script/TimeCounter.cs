@@ -35,6 +35,7 @@ public class TimeCounter : MonoBehaviour
                 timeLeftText.transform.localScale = new Vector2(textScale, textScale);
                 GameManager.instance.PKResultPanel();
             }
+            /*
             else if (timeLeft <= 10)
             {
                 if (growUp)
@@ -56,6 +57,7 @@ public class TimeCounter : MonoBehaviour
                     }
                 }
             }
+            */
         }
     }
     

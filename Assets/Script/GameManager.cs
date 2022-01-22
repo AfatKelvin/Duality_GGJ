@@ -149,6 +149,7 @@ public class GameManager : MonoBehaviour
         {
             onePSet.SetActive(false);
             twoPSet.SetActive(true);
+            TimeCounter.instance.timeLeft = TimeCounter.instance.timeInitail;
         }
 
         // 清除舊有 1P 怪物
@@ -250,9 +251,15 @@ public class GameManager : MonoBehaviour
     {
         resultMenu.SetActive(false);
     }
+
+    public void CloseResult2P()
+    {
+        result2PMenu.SetActive(false);
+    }
     public void ShowResult()
     {
         resultMenu.SetActive(true);
+        score1TextOnePEnd.text = ""+killMonster1P.ToString();
     }
 
     public void ShowMemberPanel()
@@ -271,14 +278,12 @@ public class GameManager : MonoBehaviour
     {
         if (p1only)
         {
-            score1TextOneP.text = " 藍騎士擊殺了" + (killMonster1P).ToString() + " 隻";
+            score1TextOneP.text = " 紅騎士擊殺了" + (killMonster1P).ToString() + " 隻";
         }
         else if (!p1only)
         {
-            score2TextOneP.text = " 藍騎士擊殺了" + (killMonster1P).ToString() + " 隻";
-            score2TextTwoP.text = " 紅騎士擊殺了" + (killMonster2P).ToString() + " 隻";
-
-            
+            score2TextOneP.text = " 紅騎士擊殺了" + (killMonster1P).ToString() + " 隻";
+            score2TextTwoP.text = " 藍騎士擊殺了" + (killMonster2P).ToString() + " 隻";
 
             combo1PText.text = "Combo : " + combo1P;
             combo2PText.text = "Combo : " + combo2P;
@@ -316,7 +321,7 @@ public class GameManager : MonoBehaviour
     public void OnePlayerResultPanel()
     {
         resultMenu.SetActive(true);
-        score1TextOnePEnd.text = "分數 : " + (killMonster1P * 100).ToString();
+        score1TextOnePEnd.text = "" + (killMonster1P * 100).ToString();
     }
 
 
@@ -329,11 +334,11 @@ public class GameManager : MonoBehaviour
 
         if (killMonster1P > killMonster2P)
         {
-            winLosJudgeText2P.text = "紅 比 藍 多擊殺了 " + (killMonster1P > killMonster2P).ToString() + " 隻 ";
+            winLosJudgeText2P.text = "紅 比 藍 多擊殺了 " + (killMonster1P - killMonster2P).ToString() + " 隻 ";
         }
         else if (killMonster1P < killMonster2P)
         {
-            winLosJudgeText2P.text = "藍 比 紅 多擊殺了 " + (killMonster2P > killMonster1P).ToString() + " 隻 ";
+            winLosJudgeText2P.text = "藍 比 紅 多擊殺了 " + (killMonster2P - killMonster1P).ToString() + " 隻 ";
         }
         else
         {
