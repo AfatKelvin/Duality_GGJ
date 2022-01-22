@@ -20,6 +20,8 @@ public class GameManager : MonoBehaviour
     //結算時分數
     public Text score1TextOnePEnd, score2TextOnePEnd, score2TextTwoPEnd, winLosJudgeText1P,winLosJudgeText2P;
 
+    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -269,14 +271,16 @@ public class GameManager : MonoBehaviour
     {
         if (p1only)
         {
-            score1TextOneP.text = " 分數 : " + (killMonster1P * 100).ToString();
+            score1TextOneP.text = " 擊殺數 : " + (killMonster1P * 100).ToString();
         }
         else if (!p1only)
         {
-            score2TextOneP.text = " 1P 分數 : " + (killMonster1P * 100).ToString();
-            score2TextTwoP.text = " 2P 分數 : " + (killMonster2P * 100).ToString();
+            score2TextOneP.text = " 1P 擊殺數 : " + (killMonster1P * 100).ToString();
+            score2TextTwoP.text = " 2P 擊殺數 : " + (killMonster2P * 100).ToString();
             combo1PText.text = "Combo : " + combo1P;
             combo2PText.text = "Combo : " + combo2P;
+
+
         }
     }
 

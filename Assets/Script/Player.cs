@@ -8,6 +8,12 @@ public class Player : MonoBehaviour
     public GameObject attackLeft, attackRight;
     public int heroTeam;
     public bool cannotAtttack;
+    public bool comboBuff = false;
+    public float comboBuffTime = 3f;
+    public float comboBuffLeft = 3f;
+
+    //comboBuff ¯S®Ä
+    public GameObject comboEffect;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,9 +22,31 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /*
         if (Input.GetKeyDown(KeyCode.A) && Input.GetKeyDown(KeyCode.S))
         {
             Debug.Log("AS done");
+        }
+        */
+        if (comboBuff)
+        {
+            comboBuffLeft -= Time.deltaTime;
+            Debug.Log("ComboBuff");
+            if (comboBuffLeft <= 0)
+            {
+                comboBuff = false;
+                comboEffect.SetActive(false);
+            }
+        }
+
+        if (comboBuff)
+        {
+            if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.S)) 
+            {
+                Attack(2);
+                GameManager.instance.MonsterGenerate();
+                Debug.Log("AASS done");
+            }
         }
         else if (Input.GetKeyDown(KeyCode.A) && cannotAtttack ==false)
         {
@@ -81,6 +109,11 @@ public class Player : MonoBehaviour
             attackLeft.SetActive(false);
             attackRight.SetActive(true);
         }
+        else if (atkNum == 2)
+        {
+            attackLeft.SetActive(true);
+            attackRight.SetActive(true);
+        }
 
         yield return new WaitForSeconds(0.1f);
 
@@ -104,9 +137,6 @@ public class Player : MonoBehaviour
                 GameManager.instance.monsterCollect2.transform.GetChild(i).gameObject.GetComponent<MonsterMove>().MoveToGoal();
             }
         }
-
-
-
     }
 
     public void MonsterTouch() 
@@ -158,5 +188,22 @@ public class Player : MonoBehaviour
         gameObject.GetComponent<BoxCollider2D>().enabled = true; //«ì´_¥i³Q¸I¼²
     }
 
+    public void ComboBuffOn() 
+    {
+        if (GameManager.instance.combo1P>=30 && heroTeam ==1)
+        {
+            comboEffect.SetActive(true);
+            GameManager.instance.combo1P = 0;// comboÂk¹s
+            comboBuff = true;
+            comboBuffLeft = comboBuffTime;
+        }
+        else if (GameManager.instance.combo2P >= 30 && heroTeam == 2)
+        {
+            comboEffect.SetActive(true);
+            GameManager.instance.combo2P = 0;// comboÂk¹s
+            comboBuff = true;
+            comboBuffLeft = comboBuffTime;
+        }
+    }
 
 }

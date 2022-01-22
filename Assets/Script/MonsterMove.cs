@@ -8,6 +8,7 @@ public class MonsterMove : MonoBehaviour
     public int monsterNum; //for 幾P的怪物
     public SpriteRenderer showSpriteRender;
     public Sprite beAttackedSprite;
+    public bool postAttack =false; //已被揍過
 
     // Start is called before the first frame update
     void Start()
@@ -38,13 +39,13 @@ public class MonsterMove : MonoBehaviour
 
     public void MoveToGoal()
     {
-        if (gameObject.transform.position.x > 0)
+        if (gameObject.transform.position.x > 0 && postAttack ==false)
         {
 
             //StartCoroutine(Move()); //延遲碰撞
             gameObject.transform.position = new Vector2(gameObject.transform.position.x - 1, gameObject.transform.position.y);
         }
-        else if (gameObject.transform.position.x < 0)
+        else if (gameObject.transform.position.x < 0 && postAttack == false)
         {
             //StartCoroutine(Move()); //延遲碰撞
             gameObject.transform.position = new Vector2(gameObject.transform.position.x + 1, gameObject.transform.position.y);
@@ -63,15 +64,26 @@ public class MonsterMove : MonoBehaviour
             {
                 GameManager.instance.killMonster1P += 1;
                 GameManager.instance.combo1P += 1;
+                if (GameManager.instance.combo1P>=30 && GameManager.instance.p1only ==false)
+                {
+                    collision.gameObject.transform.parent.gameObject.GetComponent<Player>().ComboBuffOn();
+                }
             }
             else if (collision.gameObject.transform.parent.gameObject.GetComponent<Player>().heroTeam == 2)
             {
                 GameManager.instance.killMonster2P += 1;
                 GameManager.instance.combo2P += 1;
+                if (GameManager.instance.combo2P >= 30 && GameManager.instance.p1only == false)
+                {
+                    collision.gameObject.transform.parent.gameObject.GetComponent<Player>().ComboBuffOn();
+                }
             }
 
-            GameManager.instance.ScoreRenew();
+            //feve Mode判定
 
+
+            GameManager.instance.ScoreRenew();
+            postAttack = true; // 標記 怪已被揍過
             MonterBackMove();
             //Destroy(gameObject);
 
@@ -108,21 +120,23 @@ public class MonsterMove : MonoBehaviour
         float backPointion = 0f; //判斷位置
         if (monsterName == "White") //判斷往哪邊退
         {
-            backPointion = gameObject.transform.position.x + 0.5f;
+            backPointion = gameObject.transform.position.x + 1.5f;
             gameObject.GetComponent<BoxCollider2D>().enabled = false;
+            gameObject.transform.position = new Vector2(2, gameObject.transform.position.y);
         }
         else if (monsterName == "Black")
         {
-            backPointion = gameObject.transform.position.x -0.5f;
+            backPointion = gameObject.transform.position.x -1.5f;
             gameObject.GetComponent<BoxCollider2D>().enabled = false;
+            gameObject.transform.position = new Vector2(-2, gameObject.transform.position.y);
         }
 
         if (monsterName == "White") //位移
         {
             while (gameObject.transform.position.x < backPointion)
             {
-                gameObject.transform.position =new Vector2(gameObject.transform.position.x + 0.1f, gameObject.transform.position.y);
-
+                gameObject.transform.position =new Vector2(gameObject.transform.position.x + 0.05f, gameObject.transform.position.y);
+                showSpriteRender.color = new Color(showSpriteRender.color.r, showSpriteRender.color.g, showSpriteRender.color.b, (backPointion - gameObject.transform.position.x) / 1.5f);
                 yield return new WaitForSeconds(0.1f);
             }
         }
@@ -130,7 +144,8 @@ public class MonsterMove : MonoBehaviour
         {
             while (gameObject.transform.position.x > backPointion)
             {
-                gameObject.transform.position = new Vector2(gameObject.transform.position.x - 0.1f, gameObject.transform.position.y);
+                gameObject.transform.position = new Vector2(gameObject.transform.position.x - 0.05f, gameObject.transform.position.y);
+                showSpriteRender.color = new Color(showSpriteRender.color.r, showSpriteRender.color.g, showSpriteRender.color.b, (gameObject.transform.position.x-backPointion) / 1.5f);
                 yield return new WaitForSeconds(0.1f);
             }
         }
