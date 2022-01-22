@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5521870535321921116}
   - component: {fileID: 1486541646821883632}
   m_Layer: 0
-  m_Name: MonsterBlack
+  m_Name: 2PBlackMonster
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -99,7 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b022bcd0eef1094e83ac34141aa689c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monsterNum: 1
+  monsterNum: 2
 --- !u!61 &5521870535321921116
 BoxCollider2D:
   m_ObjectHideFlags: 0

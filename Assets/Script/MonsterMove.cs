@@ -49,15 +49,34 @@ public class MonsterMove : MonoBehaviour
         if (collision.tag == "Attack")
         {
             Debug.Log("kill " + gameObject.name);
+            
+            if (collision.gameObject.transform.parent.gameObject.GetComponent<Player>().heroTeam == 1)
+            {
+                GameManager.instance.killMonster1P += 1;
+            }
+            else if (collision.gameObject.transform.parent.gameObject.GetComponent<Player>().heroTeam == 2)
+            {
+                GameManager.instance.killMonster2P += 1;
+            }
+
+            
             Destroy(gameObject);
 
         }
         else if (collision.tag == "Hero")
         {
-            Debug.Log("kill " + collision.gameObject.name);
-            collision.gameObject.SetActive(false);
-            //Destroy(collision.gameObject);
-            GameManager.instance.ShowResult();
+            if (GameManager.instance.p1only)
+            {
+                Debug.Log("kill " + collision.gameObject.name);
+                collision.gameObject.SetActive(false);
+                //Destroy(collision.gameObject);
+                GameManager.instance.ShowResult();
+            }
+            else if(GameManager.instance.p1only == false)
+            {
+                collision.gameObject.GetComponent<Player>().MonsterTouch();
+            }
+           
         }
         
     }
