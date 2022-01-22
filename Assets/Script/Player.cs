@@ -7,7 +7,7 @@ public class Player : MonoBehaviour
     
     public GameObject attackLeft, attackRight;
     public int heroTeam;
-    bool cannotAtttack;
+    public bool cannotAtttack;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,18 +16,26 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.A) && cannotAtttack ==false)
+        if (Input.GetKeyDown(KeyCode.A) && Input.GetKeyDown(KeyCode.S))
+        {
+            Debug.Log("AS done");
+        }
+        else if (Input.GetKeyDown(KeyCode.A) && cannotAtttack ==false)
         {
             if (heroTeam == 1)
             {
                 Attack(0);
+                GameManager.instance.MonsterGenerate();
+                Debug.Log("A done");
             }
         }
-        if (Input.GetKeyDown(KeyCode.S) && cannotAtttack == false)
+        else if (Input.GetKeyDown(KeyCode.S) && cannotAtttack == false)
         {
             if (heroTeam == 1)
             {
                 Attack(1);
+                GameManager.instance.MonsterGenerate();
+                Debug.Log("S done");
             }
         }
 
@@ -37,6 +45,7 @@ public class Player : MonoBehaviour
             if (heroTeam == 2)
             {
                 Attack(0);
+                GameManager.instance.MonsterGenerate2P();
             }
         }
         if (Input.GetKeyDown(KeyCode.L) && cannotAtttack == false)
@@ -44,6 +53,7 @@ public class Player : MonoBehaviour
             if (heroTeam == 2)
             {
                 Attack(1);
+                GameManager.instance.MonsterGenerate2P();
             }
         }
     }
@@ -103,13 +113,16 @@ public class Player : MonoBehaviour
     {
         cannotAtttack = true;
         StartCoroutine(MonsterTouchIn2P_IE());
-        cannotAtttack = false;
+        
     }
 
     IEnumerator MonsterTouchIn2P_IE() 
     {
+        gameObject.GetComponent<BoxCollider2D>().enabled = false;
+        Debug.Log("MonsterTouch");
         float goal = gameObject.transform.position.y + 1.5f;
         float initial = gameObject.transform.position.y;
+
         // 撥放動畫
 
         while (gameObject.transform.position.y < goal)
@@ -121,6 +134,7 @@ public class Player : MonoBehaviour
                 gameObject.transform.position = new Vector2(gameObject.transform.position.x, goal);
             }
         }
+        
         yield return new WaitForSeconds(0.1f);
         while (gameObject.transform.position.y > initial)
         {
@@ -132,7 +146,8 @@ public class Player : MonoBehaviour
             }
         }
 
-
+        cannotAtttack = false; // 恢復可攻擊
+        gameObject.GetComponent<BoxCollider2D>().enabled = true; //恢復可被碰撞
     }
 
 

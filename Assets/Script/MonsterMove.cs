@@ -16,6 +16,12 @@ public class MonsterMove : MonoBehaviour
     void Update()
     {
         /*
+        if (gameObject.transform.position.x <=0.1f && gameObject.transform.position.x >= -0.1f)
+        {
+            gameObject.gameObject.GetComponent<BoxCollider2D>().enabled = false;
+        }
+        */
+        /*
         if (Input.GetKeyDown(KeyCode.A))
         {
             MoveToGoal();
@@ -59,7 +65,8 @@ public class MonsterMove : MonoBehaviour
                 GameManager.instance.killMonster2P += 1;
             }
 
-            
+            GameManager.instance.ScoreRenew();
+
             Destroy(gameObject);
 
         }
@@ -68,13 +75,17 @@ public class MonsterMove : MonoBehaviour
             if (GameManager.instance.p1only)
             {
                 Debug.Log("kill " + collision.gameObject.name);
-                collision.gameObject.SetActive(false);
+                //collision.gameObject.SetActive(false);
                 //Destroy(collision.gameObject);
                 GameManager.instance.ShowResult();
             }
             else if(GameManager.instance.p1only == false)
             {
+                Debug.Log("Need MonsterTouch");
                 collision.gameObject.GetComponent<Player>().MonsterTouch();
+                Destroy(gameObject);
+               
+                
             }
            
         }
