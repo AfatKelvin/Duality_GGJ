@@ -8,13 +8,15 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     public GameObject monsterWhite1,monsterBlack1, monsterWhite2, monsterBlack2;
     public GameObject monsterCollect1, monsterCollect2;
-    public GameObject mainMenu,resultMenu, result2PMenu;
+    public GameObject mainMenu,resultMenu, result2PMenu, memberPanel;
     public GameObject onePSet, twoPSet;
     public bool p1only = true;
     public int killMonster1P, killMonster2P;
+    public int combo1P, combo2P;
     //game 秈︽だ计
     public GameObject score1, score2;
     public Text score1TextOneP, score2TextOneP, score2TextTwoP;
+    public Text combo1PText, combo2PText;
     //挡衡だ计
     public Text score1TextOnePEnd, score2TextOnePEnd, score2TextTwoPEnd, winLosJudgeText1P,winLosJudgeText2P;
 
@@ -116,6 +118,8 @@ public class GameManager : MonoBehaviour
         killMonster1P = 0; //﹍て阑炳计
         killMonster2P = 0;
 
+        combo1P = 0;
+        combo2P = 0;
         
 
         p1only = onePlayer; //耞碭P
@@ -249,6 +253,18 @@ public class GameManager : MonoBehaviour
         resultMenu.SetActive(true);
     }
 
+    public void ShowMemberPanel()
+    {
+        memberPanel.SetActive(true);
+    }
+
+    public void CloseMemberPanel()
+    {
+        memberPanel.SetActive(false);
+    }
+
+
+
     public void ScoreRenew() 
     {
         if (p1only)
@@ -259,6 +275,8 @@ public class GameManager : MonoBehaviour
         {
             score2TextOneP.text = " 1P だ计 : " + (killMonster1P * 100).ToString();
             score2TextTwoP.text = " 2P だ计 : " + (killMonster2P * 100).ToString();
+            combo1PText.text = "Combo : " + combo1P;
+            combo2PText.text = "Combo : " + combo2P;
         }
     }
 
@@ -269,7 +287,6 @@ public class GameManager : MonoBehaviour
             for (int i = 0; i < monsterCollect1.transform.childCount; i++)
             {
                 Destroy(monsterCollect1.transform.GetChild(monsterCollect1.transform.childCount-1 - i).gameObject);
-                Debug.Log("Destroy 1P Test");
             }
             
         }
@@ -283,8 +300,6 @@ public class GameManager : MonoBehaviour
                 for (int i = 0; i < monsterCollect2.transform.childCount; i++)
                 {
                     Destroy(monsterCollect2.transform.GetChild(monsterCollect2.transform.childCount-1 - i).gameObject);
-
-                    Debug.Log("Destroy 2P Test");
                 }
             }
             

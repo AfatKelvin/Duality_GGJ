@@ -112,6 +112,14 @@ public class Player : MonoBehaviour
     public void MonsterTouch() 
     {
         cannotAtttack = true;
+        if (heroTeam == 1 )
+        {
+            GameManager.instance.combo1P = 0;
+        }
+        else if (heroTeam == 2)
+        {
+            GameManager.instance.combo2P = 0;
+        }
         StartCoroutine(MonsterTouchIn2P_IE());
         
     }

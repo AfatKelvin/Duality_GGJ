@@ -100,7 +100,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b022bcd0eef1094e83ac34141aa689c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  monsterName: White
   monsterNum: 1
+  showSpriteRender: {fileID: 9034162985735715001}
+  beAttackedSprite: {fileID: 21300000, guid: 76f6aa1fac46e7846afa43280d0fa17f, type: 3}
 --- !u!61 &6593988578813859304
 BoxCollider2D:
   m_ObjectHideFlags: 0
