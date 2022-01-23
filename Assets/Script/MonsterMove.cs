@@ -9,6 +9,7 @@ public class MonsterMove : MonoBehaviour
     public SpriteRenderer showSpriteRender;
     public Sprite beAttackedSprite;
     public bool postAttack =false; //已被揍過
+    public Sprite[] monsterDie;
 
     public Player playerSet;
 
@@ -186,19 +187,33 @@ public class MonsterMove : MonoBehaviour
 
         if (monsterName == "White") //位移
         {
+            int dieSpriteNum = 0;
             while (gameObject.transform.position.x < backPointion)
             {
                 gameObject.transform.position =new Vector2(gameObject.transform.position.x + 0.05f, gameObject.transform.position.y);
-                showSpriteRender.color = new Color(showSpriteRender.color.r, showSpriteRender.color.g, showSpriteRender.color.b, (backPointion - gameObject.transform.position.x) / 1.5f);
+                showSpriteRender.color = new Color(showSpriteRender.color.r, showSpriteRender.color.g, showSpriteRender.color.b, (backPointion - gameObject.transform.position.x +0.5f) / 1.5f);
+                showSpriteRender.sprite = monsterDie[dieSpriteNum];
+                dieSpriteNum += 1;
+                if (dieSpriteNum>= monsterDie.Length)
+                {
+                    dieSpriteNum = monsterDie.Length - 1;
+                }
                 yield return new WaitForSeconds(0.1f);
             }
         }
         else if (monsterName == "Black")
         {
+            int dieSpriteNum = 0;
             while (gameObject.transform.position.x > backPointion)
             {
                 gameObject.transform.position = new Vector2(gameObject.transform.position.x - 0.05f, gameObject.transform.position.y);
-                showSpriteRender.color = new Color(showSpriteRender.color.r, showSpriteRender.color.g, showSpriteRender.color.b, (gameObject.transform.position.x-backPointion) / 1.5f);
+                showSpriteRender.color = new Color(showSpriteRender.color.r, showSpriteRender.color.g, showSpriteRender.color.b, (gameObject.transform.position.x-backPointion+0.5f) / 1.5f);
+                showSpriteRender.sprite = monsterDie[dieSpriteNum];
+                dieSpriteNum += 1;
+                if (dieSpriteNum >= monsterDie.Length)
+                {
+                    dieSpriteNum = monsterDie.Length - 1;
+                }
                 yield return new WaitForSeconds(0.1f);
             }
         }

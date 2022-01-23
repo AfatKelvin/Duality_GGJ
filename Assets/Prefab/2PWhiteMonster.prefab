@@ -104,6 +104,16 @@ MonoBehaviour:
   monsterNum: 2
   showSpriteRender: {fileID: 6362368259441714522}
   beAttackedSprite: {fileID: 21300000, guid: 76f6aa1fac46e7846afa43280d0fa17f, type: 3}
+  postAttack: 0
+  monsterDie:
+  - {fileID: 21300000, guid: e92b2e97e1a69f74eacbf98b51b00039, type: 3}
+  - {fileID: 21300000, guid: e473719875a72aa408b907e9cd4a4816, type: 3}
+  - {fileID: 21300000, guid: 61321844e5f8a1e479c81367b8fc5853, type: 3}
+  - {fileID: 21300000, guid: 2471afb68f02b1c4ba94f61c2c980cb8, type: 3}
+  - {fileID: 21300000, guid: da06f3a3b9e54224daa9dc02314d6196, type: 3}
+  - {fileID: 21300000, guid: e23d4eab65359bd4b8c3feb06f7e3380, type: 3}
+  - {fileID: 21300000, guid: 670cedbcd3c07264291a15b9813b8131, type: 3}
+  playerSet: {fileID: 0}
 --- !u!61 &6593988578813859304
 BoxCollider2D:
   m_ObjectHideFlags: 0
