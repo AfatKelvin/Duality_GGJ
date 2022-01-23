@@ -64,6 +64,16 @@ public class MonsterMove : MonoBehaviour
             {
                 GameManager.instance.killMonster1P += 1;
                 GameManager.instance.combo1P += 1;
+                //怪物被揍音效
+                if (monsterName == "White")
+                {
+                    AudioManager.instance.PlayWhiteInP1();
+                }
+                else if (monsterName == "Black")
+                {
+                    AudioManager.instance.PlayBlackInP1();
+                }
+                //計算狂暴combo是否達成
                 if (GameManager.instance.combo1P>=30 && GameManager.instance.p1only ==false)
                 {
                     collision.gameObject.transform.parent.gameObject.GetComponent<Player>().ComboBuffOn();
@@ -73,6 +83,16 @@ public class MonsterMove : MonoBehaviour
             {
                 GameManager.instance.killMonster2P += 1;
                 GameManager.instance.combo2P += 1;
+                //怪物被揍音效
+                if (monsterName == "White")
+                {
+                    AudioManager.instance.PlayWhiteInP2();
+                }
+                else if (monsterName == "Black")
+                {
+                    AudioManager.instance.PlayBlackInP2();
+                }
+                //計算狂暴combo是否達成
                 if (GameManager.instance.combo2P >= 30 && GameManager.instance.p1only == false)
                 {
                     collision.gameObject.transform.parent.gameObject.GetComponent<Player>().ComboBuffOn();
