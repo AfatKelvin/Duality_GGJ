@@ -16,6 +16,9 @@ public class Player : MonoBehaviour
 
     //comboBuff 特效
     public GameObject comboEffect;
+    // 震動特效
+    public UpDown vibrationControl;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -56,6 +59,7 @@ public class Player : MonoBehaviour
                     Attack(2);
                     GameManager.instance.MonsterGenerate();
                     AudioManager.instance.PlayNormalAttackP1();
+                    vibrationControl.VibrationTurnOn(1);
                     Debug.Log("AASS done");
                 }
                 
@@ -68,6 +72,7 @@ public class Player : MonoBehaviour
                 Attack(0);
                 GameManager.instance.MonsterGenerate();
                 AudioManager.instance.PlayNormalAttackP1();
+                vibrationControl.VibrationTurnOn(2);
                 Debug.Log("A done");
             }
         }
@@ -78,6 +83,7 @@ public class Player : MonoBehaviour
                 Attack(1);
                 GameManager.instance.MonsterGenerate();
                 AudioManager.instance.PlayNormalAttackP1();
+                vibrationControl.VibrationTurnOn(1);
                 Debug.Log("S done");
             }
         }
@@ -91,6 +97,7 @@ public class Player : MonoBehaviour
                     Attack(2);
                     GameManager.instance.MonsterGenerate2P();
                     AudioManager.instance.PlayNormalAttackP2();
+                    vibrationControl.VibrationTurnOn(1);
                     Debug.Log("AASS done");
                 }
 
@@ -103,6 +110,7 @@ public class Player : MonoBehaviour
                 Attack(0);
                 GameManager.instance.MonsterGenerate2P();
                 AudioManager.instance.PlayNormalAttackP2();
+                vibrationControl.VibrationTurnOn(1);
             }
         }
         else if (Input.GetKeyDown(KeyCode.L) && cannotAtttack == false)
@@ -112,6 +120,7 @@ public class Player : MonoBehaviour
                 Attack(1);
                 GameManager.instance.MonsterGenerate2P();
                 AudioManager.instance.PlayNormalAttackP2();
+                vibrationControl.VibrationTurnOn(1);
             }
         }
     }

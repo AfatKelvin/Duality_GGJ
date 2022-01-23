@@ -10,13 +10,14 @@ GameObject:
   m_Component:
   - component: {fileID: 6503099633398811287}
   - component: {fileID: 6503099633398811284}
+  - component: {fileID: 14838311}
   m_Layer: 0
   m_Name: BuffEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6503099633398811287
 Transform:
   m_ObjectHideFlags: 0
@@ -40,7 +41,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6503099633398811285}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -85,6 +86,32 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &14838311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6503099633398811285}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f5ce13f9dc7c154cb3717de17f49c08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blueSet:
+  - {fileID: 21300000, guid: 650aeaae584dd9c4bb94c6a3d758d85e, type: 3}
+  - {fileID: 21300000, guid: 25826b70a84cffb439a7c24660f8e51a, type: 3}
+  - {fileID: 21300000, guid: 9708511979fc24b44a1f9b89f084e063, type: 3}
+  - {fileID: 21300000, guid: af0cebc95a77a904d81967f93670be6c, type: 3}
+  - {fileID: 21300000, guid: ea109b5b354c6bd4c9b76326d80116f5, type: 3}
+  redSet:
+  - {fileID: 21300000, guid: 03d1fea4d9a083a4595f47d71f90ce17, type: 3}
+  - {fileID: 21300000, guid: d2c207ba1df9fc044bf0e3fed59fc32c, type: 3}
+  - {fileID: 21300000, guid: 0c4b28ac3e3331b4aa5ecf0b05232f69, type: 3}
+  - {fileID: 21300000, guid: 82b4c54da6d324649997c9da579e306b, type: 3}
+  - {fileID: 21300000, guid: 910f3c76f220bcb4e819bcd44f78082f, type: 3}
+  spriteRenderer1: {fileID: 6503099633398811284}
+  combo: 0
 --- !u!1 &6503099633787406679
 GameObject:
   m_ObjectHideFlags: 0
@@ -102,7 +129,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6503099633787406678
 Transform:
   m_ObjectHideFlags: 0

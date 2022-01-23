@@ -16,15 +16,7 @@ public class BuffConboEffect : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            PlayerFireEffect(1);
-        }
-
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-            PlayerFireEffect(2);
-        }
+        
     }
 
     public void PlayerFireEffect(int hero) 
