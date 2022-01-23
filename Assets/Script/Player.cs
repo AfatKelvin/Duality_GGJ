@@ -15,7 +15,7 @@ public class Player : MonoBehaviour
     public Vector2 iniPos;
 
     //comboBuff ¯S®Ä
-    public GameObject comboEffect1,comboEffect2;
+    public GameObject comboEffect;
     // Start is called before the first frame update
     void Start()
     {
@@ -42,8 +42,7 @@ public class Player : MonoBehaviour
             if (comboBuffLeft <= 0)
             {
                 comboBuff = false;
-                comboEffect1.SetActive(false);
-                comboEffect2.SetActive(false);
+                comboEffect.SetActive(false);
                 gameObject.tag = "Hero";
             }
         }
@@ -226,7 +225,8 @@ public class Player : MonoBehaviour
     {
         if (GameManager.instance.combo1P>= comboBuffNeedKill && heroTeam ==1)
         {
-            comboEffect1.SetActive(true);
+            comboEffect.SetActive(true);
+            comboEffect.GetComponent<BuffConboEffect>().PlayerFireEffect(heroTeam);
             gameObject.tag = "Attack";
             GameManager.instance.combo1P = 0;// comboÂk¹s
             comboBuff = true;
@@ -234,7 +234,8 @@ public class Player : MonoBehaviour
         }
         else if (GameManager.instance.combo2P >= comboBuffNeedKill && heroTeam == 2)
         {
-            comboEffect2.SetActive(true);
+            comboEffect.SetActive(true);
+            comboEffect.GetComponent<BuffConboEffect>().PlayerFireEffect(heroTeam);
             gameObject.tag = "Attack";
             GameManager.instance.combo2P = 0;// comboÂk¹s
             comboBuff = true;
