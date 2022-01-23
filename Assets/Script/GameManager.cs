@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     public Text combo1PText, combo2PText;
     //結算時分數
     public Text score1TextOnePEnd, score2TextOnePEnd, score2TextTwoPEnd, winLosJudgeText1P,winLosJudgeText2P;
+    public Player playerOne, playerTwo, playerOneIn1P;
 
     
 
@@ -144,11 +145,16 @@ public class GameManager : MonoBehaviour
         {
             onePSet.SetActive(true);
             twoPSet.SetActive(false);
+            playerOneIn1P.PlayerInitial();
+
         }
         else
         {
             onePSet.SetActive(false);
             twoPSet.SetActive(true);
+
+            playerOne.PlayerInitial();
+            playerTwo.PlayerInitial();
             TimeCounter.instance.timeLeft = TimeCounter.instance.timeInitail;
         }
 

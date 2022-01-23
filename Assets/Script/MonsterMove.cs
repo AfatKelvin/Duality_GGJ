@@ -19,22 +19,6 @@ public class MonsterMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*
-        if (gameObject.transform.position.x <=0.1f && gameObject.transform.position.x >= -0.1f)
-        {
-            gameObject.gameObject.GetComponent<BoxCollider2D>().enabled = false;
-        }
-        */
-        /*
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            MoveToGoal();
-        }
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            MoveToGoal();
-        }
-        */
     }
 
     public void MoveToGoal()

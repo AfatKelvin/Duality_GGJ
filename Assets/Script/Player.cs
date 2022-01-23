@@ -12,12 +12,18 @@ public class Player : MonoBehaviour
     public float comboBuffTime = 3f;
     public float comboBuffLeft = 3f;
     int comboBuffNeedKill = 30;
+    public Vector2 iniPos;
 
     //comboBuff ¯S®Ä
     public GameObject comboEffect1,comboEffect2;
     // Start is called before the first frame update
     void Start()
     {
+        if (iniPos.x ==0 && iniPos.y==0 )
+        {
+            iniPos = gameObject.transform.position;
+        }
+        
     }
 
     // Update is called once per frame
@@ -234,6 +240,14 @@ public class Player : MonoBehaviour
             comboBuff = true;
             comboBuffLeft = comboBuffTime;
         }
+    }
+
+    public void PlayerInitial() 
+    {
+        gameObject.transform.position = iniPos;
+        cannotAtttack = false;
+        comboBuff = false;
+        comboBuffLeft = 3f;
     }
 
 }
