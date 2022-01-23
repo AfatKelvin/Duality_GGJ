@@ -208,7 +208,7 @@ public class Player : MonoBehaviour
         while (gameObject.transform.position.y < goal)
         {
             gameObject.transform.position = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y + 0.1f);
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.0166f);
             if (gameObject.transform.position.y >= goal)
             {
                 gameObject.transform.position = new Vector2(gameObject.transform.position.x, goal);
@@ -219,7 +219,7 @@ public class Player : MonoBehaviour
         while (gameObject.transform.position.y > initial)
         {
             gameObject.transform.position = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y - 0.1f);
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.0166f);
             if (gameObject.transform.position.y <= initial)
             {
                 gameObject.transform.position = new Vector2(gameObject.transform.position.x, initial);

@@ -10,15 +10,56 @@ public class MonsterMove : MonoBehaviour
     public Sprite beAttackedSprite;
     public bool postAttack =false; //¤w³Q´~¹L
 
+    public Player playerSet;
+
     // Start is called before the first frame update
     void Start()
     {
-
+        if (GameManager.instance.p1only ==false)
+        {
+            if (monsterNum==1)
+            {
+                playerSet = GameObject.Find("Hero1In2P").GetComponent<Player>();
+            }
+            else if (monsterNum == 2)
+            {
+                playerSet = GameObject.Find("Hero2In2P").GetComponent<Player>();
+            }
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+        /*
+        if (GameManager.instance.p1only == false && playerSet.comboBuff)
+        {
+            if (gameObject.transform.position.x > 0 && gameObject.transform.position.x % 1 != 0)
+            {
+                if (monsterNum == 1)
+                {
+                    gameObject.transform.position = new Vector2(1, -4);
+                }
+                else
+                {
+                    gameObject.transform.position = new Vector2(1, 2);
+                }
+
+            }
+            else if (gameObject.transform.position.x < 0 && gameObject.transform.position.x % 1 != 0)
+            {
+                if (monsterNum == 1)
+                {
+                    gameObject.transform.position = new Vector2(-1, -4);
+                }
+                else
+                {
+                    gameObject.transform.position = new Vector2(-1, 2);
+                }
+            }
+        }
+        
+       */
     }
 
     public void MoveToGoal()
@@ -104,8 +145,16 @@ public class MonsterMove : MonoBehaviour
             else if (GameManager.instance.p1only == false)
             {
                 Debug.Log("Need MonsterTouch");
-                collision.gameObject.GetComponent<Player>().MonsterTouch();
-                Destroy(gameObject);
+                if (playerSet.comboBuff)
+                {
+                    Destroy(gameObject);
+                }
+                else
+                {
+                    collision.gameObject.GetComponent<Player>().MonsterTouch();
+                    Destroy(gameObject);
+                }
+                
             }
 
         }

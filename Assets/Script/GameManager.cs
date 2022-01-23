@@ -351,4 +351,9 @@ public class GameManager : MonoBehaviour
             winLosJudgeText2P.text = "¬õ ©M ÂÅ ¥­¤â";
         }
     }
+
+    public void LeaveGame()
+    {
+        Application.Quit();
+    }
 }

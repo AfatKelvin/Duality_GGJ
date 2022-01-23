@@ -3337,7 +3337,7 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: b0d6f64775c66e34fb1ef3b15abe6a3d, type: 3}
     - target: {fileID: 4967151265259187498, guid: da1dc08489eb19843b9802433f321eda, type: 3}
       propertyPath: m_Name
-      value: Hero2
+      value: Hero2In2P
       objectReference: {fileID: 0}
     - target: {fileID: 4967151265259187498, guid: da1dc08489eb19843b9802433f321eda, type: 3}
       propertyPath: m_TagString
@@ -3770,6 +3770,18 @@ MonoBehaviour:
       - m_Target: {fileID: 268603799}
         m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
         m_MethodName: PlayrButtonEffect
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1313884317}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: LeaveGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4919,7 +4931,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4967151265259187498, guid: da1dc08489eb19843b9802433f321eda, type: 3}
       propertyPath: m_Name
-      value: Hero1
+      value: Hero1In2P
       objectReference: {fileID: 0}
     - target: {fileID: 4967151265259187498, guid: da1dc08489eb19843b9802433f321eda, type: 3}
       propertyPath: m_IsActive
