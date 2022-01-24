@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TextShining : MonoBehaviour
 {
-    public float timeTotal = 10f;
+    public float localScale = 2;
     public bool growUp = true;
     public float textScale = 1f;
     // Start is called before the first frame update
@@ -20,13 +20,14 @@ public class TextShining : MonoBehaviour
     }
 
 
-    IEnumerator  GrowUp() 
+    IEnumerator  ScaleDown() 
     {
-        while (textScale<2)
+        float tempScale = localScale;
+        while (tempScale >=1)
         {
-            textScale += 0.1f;
-            gameObject.transform.localScale = new Vector2(textScale, textScale);
-            yield return new WaitForSeconds(0.1f);
+            gameObject.transform.localScale = new Vector2(tempScale, tempScale);
+            tempScale -= 0.05f;
+            yield return new WaitForSeconds(0.05f);
         }
         
     }

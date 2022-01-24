@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Spine.Unity;
 
 public class Player : MonoBehaviour
 {
-    
+
     public GameObject attackLeft, attackRight, comboAttackLeft, comboAttackRight;
     public int heroTeam;
     public bool cannotAtttack;
@@ -18,15 +19,34 @@ public class Player : MonoBehaviour
     public GameObject comboEffect;
     // 震動特效
     public UpDown vibrationControl;
+    //
+    public SkeletonAnimation heroIdle, heroLeftHit, heroRightHit;
+    public GameObject heroIdleObj, heroLeftHitObj, heroRightHitObj;
 
     // Start is called before the first frame update
     void Start()
     {
-        if (iniPos.x ==0 && iniPos.y==0 )
+        if (gameObject.GetComponent<Player>().heroTeam == 1)
+        {
+            heroIdle.initialSkinName = "Hero_1P";
+            heroLeftHit.initialSkinName = "Hero_1P";
+            heroRightHit.initialSkinName = "Hero_1P";
+        }
+        if (gameObject.GetComponent<Player>().heroTeam == 2)
+        {
+            heroIdle.initialSkinName = "Hero_2P";
+            heroLeftHit.initialSkinName = "Hero_2P";
+            heroRightHit.initialSkinName = "Hero_2P";
+        }
+        heroLeftHitObj.SetActive(false);
+        heroRightHitObj.SetActive(false);
+
+
+        if (iniPos.x == 0 && iniPos.y == 0)
         {
             iniPos = gameObject.transform.position;
         }
-        
+
     }
 
     // Update is called once per frame
@@ -38,6 +58,7 @@ public class Player : MonoBehaviour
             Debug.Log("AS done");
         }
         */
+
         if (comboBuff)
         {
             comboBuffLeft -= Time.deltaTime;
@@ -47,12 +68,13 @@ public class Player : MonoBehaviour
                 comboBuff = false;
                 comboEffect.SetActive(false);
                 gameObject.tag = "Hero";
+                // ComboBuffOffPlayer();
             }
         }
 
         if (comboBuff)
         {
-            if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.S)) 
+            if (Input.GetKeyDown(KeyCode.D) /*Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.S)*/)
             {
                 if (heroTeam == 1)
                 {
@@ -62,14 +84,16 @@ public class Player : MonoBehaviour
                     vibrationControl.VibrationTurnOn(1);
                     Debug.Log("AASS done");
                 }
-                
+
             }
         }
-        else if (Input.GetKeyDown(KeyCode.A) && cannotAtttack ==false)
+        else if (Input.GetKeyDown(KeyCode.A) && cannotAtttack == false)
         {
-            if (heroTeam == 1 && comboBuff==false)
+            if (heroTeam == 1 && comboBuff == false)
             {
                 Attack(0);
+
+
                 GameManager.instance.MonsterGenerate();
                 AudioManager.instance.PlayNormalAttackP1();
                 vibrationControl.VibrationTurnOn(2);
@@ -90,7 +114,7 @@ public class Player : MonoBehaviour
 
         if (comboBuff)
         {
-            if (Input.GetKeyDown(KeyCode.K) || Input.GetKeyDown(KeyCode.L))
+            if (Input.GetKeyDown(KeyCode.L)/*Input.GetKeyDown(KeyCode.K) || Input.GetKeyDown(KeyCode.L)*/)
             {
                 if (heroTeam == 2)
                 {
@@ -103,7 +127,7 @@ public class Player : MonoBehaviour
 
             }
         }
-        else if (Input.GetKeyDown(KeyCode.K) && cannotAtttack == false)
+        else if (Input.GetKeyDown(KeyCode.J) && cannotAtttack == false)
         {
             if (heroTeam == 2 && comboBuff == false)
             {
@@ -113,7 +137,7 @@ public class Player : MonoBehaviour
                 vibrationControl.VibrationTurnOn(1);
             }
         }
-        else if (Input.GetKeyDown(KeyCode.L) && cannotAtttack == false)
+        else if (Input.GetKeyDown(KeyCode.K) && cannotAtttack == false)
         {
             if (heroTeam == 2 && comboBuff == false)
             {
@@ -125,7 +149,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void Attack(int num) 
+    public void Attack(int num)
     {
         //attackLeft.SetActive(false);
         // attackRight.SetActive(false);
@@ -133,12 +157,12 @@ public class Player : MonoBehaviour
         StartCoroutine(ShowAtk(num));
     }
 
-    IEnumerator ShowAtk(int atkNum) 
+    IEnumerator ShowAtk(int atkNum)
     {
         //attackLeft.SetActive(false);
         //attackRight.SetActive(false);
 
-        if (atkNum ==0)
+        if (atkNum == 0)
         {
             attackLeft.SetActive(true);
             attackRight.SetActive(false);
@@ -150,6 +174,8 @@ public class Player : MonoBehaviour
         }
         else if (atkNum == 2)
         {
+            //ComboBuffOnPlayer();
+
             comboAttackLeft.SetActive(true);
             comboAttackRight.SetActive(true);
         }
@@ -177,12 +203,25 @@ public class Player : MonoBehaviour
                 GameManager.instance.monsterCollect2.transform.GetChild(i).gameObject.GetComponent<MonsterMove>().MoveToGoal();
             }
         }
+
+        if (atkNum == 0)
+        {
+            StopAllCoroutines();
+            StartCoroutine(HeroLeftAttack());
+        }
+        else if (atkNum == 1)
+        {
+            StopAllCoroutines();
+            StartCoroutine(HeroRightAttack());
+        }
+
+
     }
 
-    public void MonsterTouch() 
+    public void MonsterTouch()
     {
         cannotAtttack = true;
-        if (heroTeam == 1 )
+        if (heroTeam == 1)
         {
             GameManager.instance.combo1P = 0;
             AudioManager.instance.PlayerBeAttackP1();
@@ -193,10 +232,10 @@ public class Player : MonoBehaviour
             AudioManager.instance.PlayerBeAttackP2();
         }
         StartCoroutine(MonsterTouchIn2P_IE());
-        
+
     }
 
-    IEnumerator MonsterTouchIn2P_IE() 
+    IEnumerator MonsterTouchIn2P_IE()
     {
         gameObject.GetComponent<BoxCollider2D>().enabled = false;
         Debug.Log("MonsterTouch");
@@ -214,7 +253,7 @@ public class Player : MonoBehaviour
                 gameObject.transform.position = new Vector2(gameObject.transform.position.x, goal);
             }
         }
-        
+
         yield return new WaitForSeconds(0.1f);
         while (gameObject.transform.position.y > initial)
         {
@@ -230,12 +269,13 @@ public class Player : MonoBehaviour
         gameObject.GetComponent<BoxCollider2D>().enabled = true; //恢復可被碰撞
     }
 
-    public void ComboBuffOn() 
+    public void ComboBuffOn()
     {
-        if (GameManager.instance.combo1P>= comboBuffNeedKill && heroTeam ==1)
+        if (GameManager.instance.combo1P >= comboBuffNeedKill && heroTeam == 1)
         {
             comboEffect.SetActive(true);
-            comboEffect.GetComponent<BuffConboEffect>().PlayerFireEffect(heroTeam);
+            comboEffect.transform.GetChild(0).gameObject.GetComponent<AnimationIndex>().SetCharacterState("redFire");
+            //comboEffect.GetComponent<BuffConboEffect>().PlayerFireEffect(heroTeam);
             gameObject.tag = "Attack";
             GameManager.instance.combo1P = 0;// combo歸零
             comboBuff = true;
@@ -244,7 +284,8 @@ public class Player : MonoBehaviour
         else if (GameManager.instance.combo2P >= comboBuffNeedKill && heroTeam == 2)
         {
             comboEffect.SetActive(true);
-            comboEffect.GetComponent<BuffConboEffect>().PlayerFireEffect(heroTeam);
+            comboEffect.transform.GetChild(0).gameObject.GetComponent<AnimationIndex>().SetCharacterState("blueFire");
+            //comboEffect.GetComponent<BuffConboEffect>().PlayerFireEffect(heroTeam);
             gameObject.tag = "Attack";
             GameManager.instance.combo2P = 0;// combo歸零
             comboBuff = true;
@@ -252,12 +293,106 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void PlayerInitial() 
+    public void PlayerInitial()
     {
         gameObject.transform.position = iniPos;
         cannotAtttack = false;
         comboBuff = false;
+        comboEffect.SetActive(false);
         comboBuffLeft = 3f;
+        //動作初始化
+        heroIdleObj.SetActive(true);
+        heroLeftHitObj.SetActive(false);
+        heroRightHitObj.SetActive(false);
     }
 
+  
+    
+
+    public void ComboBuffOnPlayer() 
+    {
+        if (heroTeam == 1)
+        {
+            for (int i = 0; i < GameManager.instance.monsterCollect1.transform.childCount; i++)
+            {
+                GameManager.instance.monsterCollect1.transform.GetChild(i).gameObject.GetComponent<BoxCollider2D>().enabled = false;
+            }
+        }
+        else if (heroTeam == 2)
+        {
+            for (int i = 0; i < GameManager.instance.monsterCollect2.transform.childCount; i++)
+            {
+                GameManager.instance.monsterCollect2.transform.GetChild(i).gameObject.GetComponent<BoxCollider2D>().enabled = false;
+            }
+        }
+    }
+
+    public void ComboBuffOffPlayer()
+    {
+        if (heroTeam == 1)
+        {
+            for (int i = 0; i < GameManager.instance.monsterCollect1.transform.childCount; i++)
+            {
+                GameManager.instance.monsterCollect1.transform.GetChild(i).gameObject.GetComponent<BoxCollider2D>().enabled = true;
+            }
+        }
+        else if (heroTeam == 2)
+        {
+            for (int i = 0; i < GameManager.instance.monsterCollect2.transform.childCount; i++)
+            {
+                GameManager.instance.monsterCollect2.transform.GetChild(i).gameObject.GetComponent<BoxCollider2D>().enabled = true;
+            }
+        }
+    }
+
+
+    public void AftetBuffReset() 
+    {
+        //暫時關閉所有碰撞體
+        for (int i = 0; i < GameManager.instance.monsterCollect1.transform.childCount; i++)
+        {
+            GameManager.instance.monsterCollect1.transform.GetChild(i).gameObject.GetComponent<BoxCollider2D>().enabled = false;
+        }
+
+        //reset 位置
+        for (int i = 0; i < GameManager.instance.monsterCollect1.transform.childCount; i++)
+        {
+            
+
+            if (GameManager.instance.monsterCollect1.transform.GetChild(GameManager.instance.monsterCollect1.transform.childCount-1-i).gameObject.transform.position.x % 1 !=0) 
+            {
+                float xReSet;
+
+                xReSet = Mathf.Round(GameManager.instance.monsterCollect1.transform.GetChild(i).position.x);
+                Debug.Log("i = " + i + "posX  = " + xReSet);
+                GameManager.instance.monsterCollect1.transform.GetChild(i).position = new Vector2(xReSet, GameManager.instance.monsterCollect1.transform.GetChild(i).position.y);
+                
+            }
+            else
+            {
+                Debug.Log("NoNO " + i);
+            }
+        }
+    }
+
+    IEnumerator HeroLeftAttack() 
+    {
+        
+        heroIdleObj.SetActive(false);
+        heroLeftHitObj.SetActive(true);
+        yield return new WaitForSeconds(0.05f);
+        heroIdleObj.SetActive(true);
+        heroLeftHitObj.SetActive(false);
+
+    }
+
+    IEnumerator HeroRightAttack()
+    {
+        heroIdleObj.SetActive(false);
+        heroRightHitObj.SetActive(true);
+        yield return new WaitForSeconds(0.05f);
+        heroIdleObj.SetActive(true);
+        heroRightHitObj.SetActive(false);
+
+    }
 }

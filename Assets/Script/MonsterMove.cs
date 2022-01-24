@@ -32,6 +32,12 @@ public class MonsterMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Mathf.Abs(gameObject.transform.position.x) <= 1.1f)
+        {
+            gameObject.GetComponent<BoxCollider2D>().enabled = true;
+        }
+
+
         /*
         if (GameManager.instance.p1only == false && playerSet.comboBuff)
         {
@@ -86,7 +92,7 @@ public class MonsterMove : MonoBehaviour
         {
             //Debug.Log("kill " + gameObject.name);
 
-            if (collision.gameObject.transform.parent.gameObject.GetComponent<Player>().heroTeam == 1)
+            if (collision.gameObject.transform.parent.gameObject.GetComponent<Player>().heroTeam == 1 )
             {
                 GameManager.instance.killMonster1P += 1;
                 GameManager.instance.combo1P += 1;
@@ -105,7 +111,7 @@ public class MonsterMove : MonoBehaviour
                     collision.gameObject.transform.parent.gameObject.GetComponent<Player>().ComboBuffOn();
                 }
             }
-            else if (collision.gameObject.transform.parent.gameObject.GetComponent<Player>().heroTeam == 2)
+            else if (collision.gameObject.transform.parent.gameObject.GetComponent<Player>().heroTeam == 2 )
             {
                 GameManager.instance.killMonster2P += 1;
                 GameManager.instance.combo2P += 1;
@@ -162,6 +168,35 @@ public class MonsterMove : MonoBehaviour
 
     }
 
+    public void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.tag == "Hero")
+        {
+            if (GameManager.instance.p1only)
+            {
+                Debug.Log("kill " + collision.gameObject.name);
+                //collision.gameObject.SetActive(false);
+                //Destroy(collision.gameObject);
+                GameManager.instance.ShowResult();
+            }
+            else if (GameManager.instance.p1only == false)
+            {
+                Debug.Log("Need MonsterTouch");
+                if (playerSet.comboBuff)
+                {
+                    Destroy(gameObject);
+                }
+                else
+                {
+                    collision.gameObject.GetComponent<Player>().MonsterTouch();
+                    Destroy(gameObject);
+                }
+
+            }
+        }
+    }
+
+
     public void MonterBackMove()  //©Ç®Á´~°Êµe
     {
         StartCoroutine(BeAttack());
@@ -187,33 +222,50 @@ public class MonsterMove : MonoBehaviour
 
         if (monsterName == "White") //¦ì²¾
         {
-            int dieSpriteNum = 0;
+            bool animStart = false;
             while (gameObject.transform.position.x < backPointion)
             {
-                gameObject.transform.position =new Vector2(gameObject.transform.position.x + 0.05f, gameObject.transform.position.y);
+                gameObject.transform.position =new Vector2(gameObject.transform.position.x + 0.075f, gameObject.transform.position.y);
                 showSpriteRender.color = new Color(showSpriteRender.color.r, showSpriteRender.color.g, showSpriteRender.color.b, (backPointion - gameObject.transform.position.x +0.5f) / 1.5f);
-                showSpriteRender.sprite = monsterDie[dieSpriteNum];
+                if (animStart ==false)
+                {
+                    gameObject.transform.GetChild(1).gameObject.SetActive(true);
+                    gameObject.transform.GetChild(1).gameObject.GetComponent<AnimationIndex>().SetCharacterState("whiteDie");
+                    animStart = true;
+                }
+                /*showSpriteRender.sprite = monsterDie[dieSpriteNum];
                 dieSpriteNum += 1;
                 if (dieSpriteNum>= monsterDie.Length)
                 {
                     dieSpriteNum = monsterDie.Length - 1;
                 }
+                */
                 yield return new WaitForSeconds(0.1f);
             }
         }
         else if (monsterName == "Black")
         {
-            int dieSpriteNum = 0;
+            bool animStart =false;
             while (gameObject.transform.position.x > backPointion)
             {
-                gameObject.transform.position = new Vector2(gameObject.transform.position.x - 0.05f, gameObject.transform.position.y);
+                gameObject.transform.position = new Vector2(gameObject.transform.position.x - 0.075f, gameObject.transform.position.y);
                 showSpriteRender.color = new Color(showSpriteRender.color.r, showSpriteRender.color.g, showSpriteRender.color.b, (gameObject.transform.position.x-backPointion+0.5f) / 1.5f);
-                showSpriteRender.sprite = monsterDie[dieSpriteNum];
+
+                if (animStart == false)
+                {
+                    gameObject.transform.GetChild(1).gameObject.SetActive(true);
+                    gameObject.transform.GetChild(1).gameObject.GetComponent<AnimationIndex>().SetCharacterState("blackDie");
+                    animStart = true;
+                }
+                
+                /*
+                 * //showSpriteRender.sprite = monsterDie[dieSpriteNum];
                 dieSpriteNum += 1;
                 if (dieSpriteNum >= monsterDie.Length)
                 {
                     dieSpriteNum = monsterDie.Length - 1;
                 }
+                */
                 yield return new WaitForSeconds(0.1f);
             }
         }

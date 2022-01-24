@@ -16,10 +16,7 @@ public class AudioManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            PlayerBeAttackP2();
-        }
+        
     }
 
     public void PlayrButtonEffect() 

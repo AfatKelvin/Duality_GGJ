@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Spine.Unity;
 
 public class GameManager : MonoBehaviour
 {
@@ -20,8 +21,10 @@ public class GameManager : MonoBehaviour
     //結算時分數
     public Text score1TextOnePEnd, score2TextOnePEnd, score2TextTwoPEnd, winLosJudgeText1P,winLosJudgeText2P;
     public Player playerOne, playerTwo, playerOneIn1P;
+    public GameObject result1PUISet, result2PUISet, mainUISet,memberUISet;
+    public AnimationIndex end1PAnim, end2PAnim, memberAnim;
 
-    
+
 
     // Start is called before the first frame update
     void Start()
@@ -37,26 +40,11 @@ public class GameManager : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.P))
         {
-            DestroyOldMonster();
+            //DestroyOldMonster();
             //Destroy(monsterCollect1.transform.GetChild(0).gameObject);
             //Test();
         }
-        /*
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            MonsterGenerate();
-        }
-
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            MonsterGenerate2P();
-        }
-
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            MonsterGenerate2P();
-        }
-        */
+        
 
     }
 
@@ -118,6 +106,8 @@ public class GameManager : MonoBehaviour
     {
 
         // --------------------------- 初始化---------
+        
+
         killMonster1P = 0; //初始化擊殺數
         killMonster2P = 0;
 
@@ -141,6 +131,7 @@ public class GameManager : MonoBehaviour
 
         ScoreRenew(); // 分數計算
 
+        //產生勇者初始數據
         if (p1only)
         {
             onePSet.SetActive(true);
@@ -161,48 +152,17 @@ public class GameManager : MonoBehaviour
         // 清除舊有 1P 怪物
 
         DestroyOldMonster();
+        
         /*
-        if (monsterCollect1.transform.childCount > 0)
-        {
-            while (monsterCollect1.transform.childCount > 0)
-            {
-                Destroy(monsterCollect1.transform.GetChild(0).gameObject);
-            }
-        }
-
-        // 清除舊有 2P 怪物
-        if (monsterCollect2.transform.childCount > 0)
-        {
-            while (monsterCollect2.transform.childCount > 0)
-            {
-                Destroy(monsterCollect2.transform.GetChild(0).gameObject);
-            }
-        }
-        */
-
         if (monsterCollect1.transform.childCount>0)
         {
             for (int i = 0; i < 8; i++)
             {
-                Debug.Log("Destroy 1P KK" + monsterCollect1.transform.childCount);
                 Destroy(monsterCollect1.transform.GetChild(0).gameObject);
-                Debug.Log("Destroy 1P KK" + monsterCollect1.transform.childCount);
-                Debug.Log("Destroy 1P Test");
-            }
-        }
-        
-        
-        /*
-        if (p1only ==false)
-        {
-            for (int i = 0; i < monsterCollect2.transform.childCount; i++)
-            {
-                Destroy(monsterCollect2.transform.GetChild(0).gameObject);
-
-                Debug.Log("Destroy 2P Test");
             }
         }
         */
+        
 
         // 產生怪物
         for (int i = 0; i < 8; i++)
@@ -251,6 +211,7 @@ public class GameManager : MonoBehaviour
     }
     public void ShowMain()
     {
+        DestroyOldMonster();
         mainMenu.SetActive(true);
     }
     public void CloseResult()
@@ -264,17 +225,27 @@ public class GameManager : MonoBehaviour
     }
     public void ShowResult()
     {
+        result1PUISet.SetActive(false);
+        score1.SetActive(false);
         resultMenu.SetActive(true);
+        onePSet.SetActive(false);
+        end1PAnim.SetCharacterState("start");
+        //result1PUISet.SetActive(true);
+        //SpineManager.instance.Close1PFlagStart();
         score1TextOnePEnd.text = ""+killMonster1P.ToString();
     }
 
     public void ShowMemberPanel()
     {
         memberPanel.SetActive(true);
+        mainUISet.SetActive(false);
+        memberAnim.SetCharacterState("start");
     }
 
     public void CloseMemberPanel()
     {
+
+        mainUISet.SetActive(true);
         memberPanel.SetActive(false);
     }
 
@@ -331,10 +302,15 @@ public class GameManager : MonoBehaviour
     }
 
 
-    public void PKResultPanel() 
+    public void PKResultPanel()
     {
-        Debug.Log("2pEnd");
+        result2PUISet.SetActive(false);
+        score2.SetActive(false);
         result2PMenu.SetActive(true);
+        twoPSet.SetActive(false);
+        end2PAnim.SetCharacterState("start");
+        //result2PUISet.SetActive(true);
+        //SpineManager.instance.Close2PFlagStart();
         score2TextOnePEnd.text = "" + (killMonster1P).ToString();
         score2TextTwoPEnd.text = "" + (killMonster2P).ToString();
 
@@ -350,6 +326,8 @@ public class GameManager : MonoBehaviour
         {
             winLosJudgeText2P.text = "紅 和 藍 平手";
         }
+        //勇者動作初始化
+        
     }
 
     public void LeaveGame()
